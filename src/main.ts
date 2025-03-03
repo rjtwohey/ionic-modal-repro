@@ -8,7 +8,10 @@ import { AppComponent } from './app/app.component';
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
+    provideIonicAngular({
+      useSetInputAPI: true,
+      mode: 'ios',
+    }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
   ],
 });
