@@ -1,6 +1,7 @@
-import {inject, Injectable} from '@angular/core';
-import {ModalController} from "@ionic/angular/standalone";
-import {ModalComponent} from "./modal/modal.component";
+import { inject, Injectable, Injector } from '@angular/core';
+import { ModalController } from '@ionic/angular/standalone';
+import { ModalHostComponent } from './modal-host/modal-host.component';
+import { ModalComponent } from './modal/modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,16 @@ import {ModalComponent} from "./modal/modal.component";
 export class ModalServiceService {
   #modalController = inject(ModalController);
 
-  async open() {
+  async open(customInjector: Injector) {
     const modal = await this.#modalController.create({
-      component: ModalComponent,
+      component: ModalHostComponent,
+      componentProps: {
+        component: ModalComponent,
+        customInjector,
+      },
       focusTrap: true,
     });
+
     await modal.present();
   }
 }
